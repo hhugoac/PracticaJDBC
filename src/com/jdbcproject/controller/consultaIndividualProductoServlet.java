@@ -2,6 +2,8 @@ package com.jdbcproject.controller;
 
 import java.io.IOException;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,19 +11,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import sun.rmi.transport.Connection;
-import java.sql.*;
+import com.sun.crypto.provider.RSACipher;
+
 /**
- * Servlet implementation class buscarProductoServlet
+ * Servlet implementation class consultaIndividualProductoServlet
  */
-@WebServlet("/buscarProductoServlet")
-public class buscarProductoServlet extends HttpServlet {
+@WebServlet("/consultaIndividualProductoServlet")
+public class consultaIndividualProductoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public buscarProductoServlet() {
+    public consultaIndividualProductoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,13 +31,16 @@ public class buscarProductoServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	/* (non-Javadoc)
-	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		/*
+		 * Steps to create a DB Connection in a Java Servlet
+		 * 
+		 * */
+		
+		
 		String idProducto=request.getParameter("txtIdProducto");
 		response.setContentType("text/html");
-		//Define the connection variables to the DB
+		//Step 1. Define the connection variables to the DB
 		String url="jdbc:mysql://localhost:3306/hugo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; //3306 port, /hugo databasename
 		//The statemnet after ? in the previous line means: useUnicode=true  useJDBCCompliantTimezoneShift=True  useLegacyDatetimeCode=false serverTime=UTC
 		String nameUser="root";
@@ -47,30 +52,31 @@ public class buscarProductoServlet extends HttpServlet {
 			//Create an Driver object from JDBC package com.mysql.jdbc
 			//Driver objDriver=new Driver(); //Create an object DRiver but it is needed to import the module
 			Class.forName("com.mysql.jdbc.Driver").newInstance(); //Create an object without name
-			java.sql.Connection conn = DriverManager.getConnection(url, nameUser, password); //Se instancia el driver 
+			java.sql.Connection conn = DriverManager.getConnection(url, nameUser, password); //Instance of the driver 
+			
+			
 			
 			Statement stmt=conn.createStatement();
-			ResultSet rs=stmt.executeQuery("SELECT * FROM producto");
+			ResultSet rs=stmt.executeQuery("SELECT * FROM producto where idProducto='"+idProducto+"'");
 			
 			while(rs.next())
 			{
-				response.getWriter().println("Campo ID Producto: "+rs.getInt(1));
-				response.getWriter().println("Nombre "+rs.getString(2));
-				response.getWriter().println("Precio "+rs.getDouble(3)+"\n");
-				response.getWriter().println("<br>");
+				response.getWriter().println("Id Producto: "+rs.getInt(1));
+				response.getWriter().println("Id Producto: "+rs.getString(2));
+				response.getWriter().println("Id Producto: "+rs.getDouble(3));
 			}
-			
-					
+								
 			stmt.close();
 			conn.close();
 		}
 		catch(Exception e)
 		{
-			response.getWriter().write("Exception" + e);
+			e.printStackTrace();
 		}
 		finally
 		{
-			response.getWriter().write("No jalo");
+			//rs.close();
+			//stmt.close();
 		}
 	}
 

@@ -2,6 +2,8 @@ package com.jdbcproject.controller;
 
 import java.io.IOException;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,19 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import sun.rmi.transport.Connection;
-import java.sql.*;
 /**
- * Servlet implementation class buscarProductoServlet
+ * Servlet implementation class altaProductoServlet
  */
-@WebServlet("/buscarProductoServlet")
-public class buscarProductoServlet extends HttpServlet {
+@WebServlet("/altaProductoServlet")
+public class altaProductoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public buscarProductoServlet() {
+    public altaProductoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,11 +29,12 @@ public class buscarProductoServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	/* (non-Javadoc)
-	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//https://www.ibm.com/support/knowledgecenter/es/ssw_i5_54/rzaha/stateex.htm search info here
 		String idProducto=request.getParameter("txtIdProducto");
+		String NombreProducto=request.getParameter("txtProdName");
+		String Precio=request.getParameter("txtPrecio");
+		
 		response.setContentType("text/html");
 		//Define the connection variables to the DB
 		String url="jdbc:mysql://localhost:3306/hugo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; //3306 port, /hugo databasename
@@ -52,15 +53,11 @@ public class buscarProductoServlet extends HttpServlet {
 			Statement stmt=conn.createStatement();
 			ResultSet rs=stmt.executeQuery("SELECT * FROM producto");
 			
-			while(rs.next())
-			{
-				response.getWriter().println("Campo ID Producto: "+rs.getInt(1));
-				response.getWriter().println("Nombre "+rs.getString(2));
-				response.getWriter().println("Precio "+rs.getDouble(3)+"\n");
-				response.getWriter().println("<br>");
-			}
+			// Adds a new register to the DB
+			stmt.executeUpdate("INSERT INTO producto (idProducto,NombreProducto, Precio) VALUES ('"+idProducto +"','"+NombreProducto +"','"+Precio+"')");
 			
-					
+			//Make an single consult on the DB
+			
 			stmt.close();
 			conn.close();
 		}

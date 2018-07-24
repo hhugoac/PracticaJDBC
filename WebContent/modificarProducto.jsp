@@ -11,13 +11,15 @@
 <body>
     <h1>Práctica con JDBC</h1>
     
-    <ul>
-        <li><a href="altaProducto.jsp">Alta de productos</a></li>
-        <li><a href="borrarProducto.jsp">Borrar de productos</a></li>
-        <li><a href="consultaIndividual.jsp">Consulta individual de un producto</a></li>
-        <li><a href="ConsultaGeneralProductos.jsp">Consulta General de productos</a></li>
-        <li><a href="modificarProducto.jsp">Modificar Producto</a></li>
-    </ul>
+    <form action="buscarProductoServlet" method="POST">
+        <p>
+            <label for="txtIdProducto" >Introduce el Id del producto</label>
+            <input type="text" id="txtIdProducto" name="txtIdProducto">
+        </p>
+        <p>
+            <input type="submit" value="Consultar producto">
+        </p>
+    </form>
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/script.js"></script>
