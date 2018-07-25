@@ -10,14 +10,24 @@
 </head>
 <body>
     <h1>Práctica con JDBC</h1>
-    
-    <form action="buscarProductoServlet" method="POST">
+ 
+    <form action="modificarProductoServlet" method="POST">
+
         <p>
             <label for="txtIdProducto" >Introduce el Id del producto</label>
-            <input type="text" id="txtIdProducto" name="txtIdProducto">
+            <input type="text" id="txtIdProducto" name="txtIdProducto" value="<%=request.getAttribute("AttrIdProduct")%>" disable>
         </p>
         <p>
-            <input type="submit" value="Consultar producto">
+            <label for="txtProdName" >Introduce el Nombre </label>
+            <input type="text" id="txtProdNamee" name="txtProdName" value="<%=request.getAttribute("AttrnameProduct")%>">
+        </p>
+        <p>
+            <label for="txtPrecio" >Introduce el Precio</label>
+            <input type="text" id="txtPrecio" name="txtPrecio" value="<%=request.getAttribute("AttrpriceProduct")%>">
+        </p>
+
+        <p>
+            <input type="submit" value="Modificar">
         </p>
     </form>
     <script src="js/jquery.js"></script>

@@ -11,14 +11,16 @@
 <body>
     <h1>Práctica con JDBC</h1>
     
-    <form action="borraProducto" method="POST">
+    <form action="ModificarPrevio" method="POST">
         <p>
             <label for="txtIdProducto" >Introduce el Id del producto</label>
             <input type="text" id="txtIdProducto" name="txtIdProducto">
         </p>
+        
         <p>
-            <input type="submit" value="Borrar producto">
+            <input type="submit" value="Buscar">
         </p>
+
     </form>
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>

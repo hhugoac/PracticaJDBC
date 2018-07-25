@@ -36,27 +36,37 @@ public class altaProductoServlet extends HttpServlet {
 		String Precio=request.getParameter("txtPrecio");
 		
 		response.setContentType("text/html");
-		//Define the connection variables to the DB
+		//Step 1. Define the connection variables to the DB
 		String url="jdbc:mysql://localhost:3306/hugo?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"; //3306 port, /hugo databasename
 		//The statemnet after ? in the previous line means: useUnicode=true  useJDBCCompliantTimezoneShift=True  useLegacyDatetimeCode=false serverTime=UTC
 		String nameUser="root";
 		String password="root";
-		
+		int isRecordSave=0;
 		//Put the database connections inside a try-catch statement
 		try
 		{
 			//Create an Driver object from JDBC package com.mysql.jdbc
 			//Driver objDriver=new Driver(); //Create an object DRiver but it is needed to import the module
 			Class.forName("com.mysql.jdbc.Driver").newInstance(); //Create an object without name
-			java.sql.Connection conn = DriverManager.getConnection(url, nameUser, password); //Se instancia el driver 
+			java.sql.Connection conn = DriverManager.getConnection(url, nameUser, password); //Instancing  driver 
+			
 			
 			Statement stmt=conn.createStatement();
 			ResultSet rs=stmt.executeQuery("SELECT * FROM producto");
 			
 			// Adds a new register to the DB
-			stmt.executeUpdate("INSERT INTO producto (idProducto,NombreProducto, Precio) VALUES ('"+idProducto +"','"+NombreProducto +"','"+Precio+"')");
+			isRecordSave=stmt.executeUpdate("INSERT INTO producto (idProducto,NombreProducto, Precio) VALUES ('"+idProducto +"','"+NombreProducto +"','"+Precio+"')");
 			
-			//Make an single consult on the DB
+			if(isRecordSave==1)
+			{
+				response.getWriter().write("Registro guardado");
+			}
+			else
+			{
+				response.getWriter().write("Registro no guardado");
+			}	
+			response.getWriter().println("El producto se agrego exitosamente");
+			response.getWriter().write("<li><a href='index.jsp'>Inicio</a></li>");
 			
 			stmt.close();
 			conn.close();
@@ -65,10 +75,8 @@ public class altaProductoServlet extends HttpServlet {
 		{
 			response.getWriter().write("Exception" + e);
 		}
-		finally
-		{
-			response.getWriter().write("No jalo");
-		}
+	
+		
 	}
 
 }

@@ -62,10 +62,13 @@ public class consultaIndividualProductoServlet extends HttpServlet {
 			while(rs.next())
 			{
 				response.getWriter().println("Id Producto: "+rs.getInt(1));
-				response.getWriter().println("Id Producto: "+rs.getString(2));
-				response.getWriter().println("Id Producto: "+rs.getDouble(3));
+				response.getWriter().println("Nombre: "+rs.getString(2));
+				response.getWriter().println("Precio: "+rs.getDouble(3));
 			}
-								
+			
+			response.getWriter().println(" ");
+			response.getWriter().write("<li><a href='index.jsp'>Inicio</a></li>");
+			
 			stmt.close();
 			conn.close();
 		}

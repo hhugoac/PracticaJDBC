@@ -9,16 +9,15 @@
 <title>Práctica de JDBC</title>
 </head>
 <body>
-    <h1>Práctica con JDBC</h1>
+    <h1>Ejemplo de Transaccion</h1>
     
-    <form action="borraProducto" method="POST">
+    <form action="transactionServlet" method="get">
+       
+        
         <p>
-            <label for="txtIdProducto" >Introduce el Id del producto</label>
-            <input type="text" id="txtIdProducto" name="txtIdProducto">
+            <input type="submit" value="Hacer Transaccion">
         </p>
-        <p>
-            <input type="submit" value="Borrar producto">
-        </p>
+
     </form>
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
